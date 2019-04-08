@@ -14,15 +14,30 @@ class Game {
       9: [],
       10: [],
     };
-    // array to keep track of each roll
-    this.rolls = [];
-    // Var to keep track of frame
-    this.currentFrame = 1;
+    // Current frame on game
+    this.frameNum = 1;
+    // Current score for frame
+    this.frameScore = [];
   }
 
+  _checkSum() {}
   roll(numPins) {
-    // push rolls in rolls
-    this.rolls.push(numPins);
+    // cases
+    // If length of frame score == 0
+    // check if strike
+    // insert strike symbol to frame score
+    // if frameNum <= 9
+    // add frameScore to scoreboard
+    // go to next frame
+    // else add num of pins to frame score
+    // else if length of frame score == 1
+    // check if spare
+    // insert spare symbol to frame score
+    // add frame score to scoreboard
+    // if frameNum <= 9
+    // go to next frame
+    // else if length of frame score == 2
+    // check if
   }
 
   score() {
