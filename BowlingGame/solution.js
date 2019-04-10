@@ -20,44 +20,89 @@ class Game {
     this.frameScore = [];
   }
 
-  _checkSum() {}
+  _checkStrike() {
+    const lastRoll = this.frameScore.length - 1;
+    if (this.frameScore[lastRoll] === 'X' || this.frameScore[lastRoll] === 10) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  _checkSpare() {
+    if (
+      this.frameScore[1] === '/' ||
+      this.frameScore[0] + this.frameScore[1] === 10
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  _checkEndGame() {
+    if (
+      this.frameScore.length === 3 ||
+      (this.frameScore.length === 2 &&
+        (!this._checkSpare || !this.frameScore[0] != 'X'))
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   roll(numPins) {
-    // cases
-    // If length of frame score == 0
-    // check if strike
-    // insert strike symbol to frame score
-    // if frameNum <= 9
-    // add frameScore to scoreboard
-    // go to next frame
-    // else add num of pins to frame score
-    // else if length of frame score == 1
-    // check if spare
-    // insert spare symbol to frame score
-    // add frame score to scoreboard
-    // if frameNum <= 9
-    // go to next frame
-    // else if length of frame score == 2
-    // check if
+    if (this.frameNum != 10) {
+      // insert roll into current frame
+      this.frameScore.push(numPins);
+      // Check for spare or strike
+      if (this._checkStrike()) {
+        // if strike enter strike into current frame score
+        this.frameScore = ['X', '-'];
+      } else if (this._checkSpare()) {
+        const firstRoll = this.frameScore[0];
+        // if spare enter spare into current frame score
+        this.frameScore = [firstRoll, '/'];
+      }
+      // advance frame if length of current frame == 2, insert score and reset frame score
+      if (this.frameScore.length === 2) {
+        this.scoreboard[this.frameNum] = this.frameScore;
+        this.frameScore = [];
+        this.frameNum++;
+      }
+    } else {
+      this.frameScore.push(numPins);
+      if (this._checkEndGame()) {
+        this.score();
+      } else {
+        if (this._checkStrike()) {
+          const lastRoll = this.frameScore.length - 1;
+          this.frameScore[lastRoll] = 'X';
+        } else if (this._checkSpare() && this.frameScore.length === 2) {
+          const firstRoll = this.frameScore[0];
+          // if spare enter spare into current frame score
+          this.frameScore = [firstRoll, '/'];
+        }
+      }
+    }
   }
 
   score() {
-    const score = this.rolls.reduce((acc, cur) => {
-      return (acc += cur);
-    }, 0);
-    return score;
+    console.log('score');
   }
 }
 
 const game = new Game();
 game.roll(5);
 game.roll(3);
-console.log(game.rolls); // return [5,3]
-game.roll(2);
-game.roll(7);
-console.log(game.rolls); // return [5,3, 2, 7]
+console.log(game.scoreboard); // return [5,3]
+game.roll(10);
+// game.roll(7);
+console.log(game.scoreboard); // return [5,3, 2, 7]
 game.roll(2); // frame 3
 game.roll(7);
-game.roll(2); // frame 4
+game.roll(3); // frame 4
 game.roll(7);
 game.roll(2); // frame 5
 game.roll(7);
@@ -70,9 +115,9 @@ game.roll(7);
 game.roll(2); // frame 9
 game.roll(7);
 game.roll(2); // frame 10
-game.roll(7);
-console.log(game.rolls); // return [5,3, 2, 7]
-console.log(game.score());
+game.roll(9);
+console.log(game.scoreboard); // return [5,3, 2, 7]
+// console.log(game.score());
 
 // // if current frame less than 10
 // if (this.currentFrame < 10) {
