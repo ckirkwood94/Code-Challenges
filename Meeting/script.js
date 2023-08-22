@@ -53,6 +53,14 @@
 // console.log(meeting(s));
 
 function meeting(s) {
+  // let string = s
+  //   .toUpperCase()
+  //   .split(';')
+  //   .map((x) => x.split(':').reverse().join(', '))
+  //   .sort()
+  //   .join(')(');
+  // return '(' + string + ')';
+
   let string = s;
   console.log('String: ', string);
 
@@ -85,14 +93,6 @@ function meeting(s) {
 
   // concatenate parenthesis to match expected output and return
   return '(' + sortedString + ')';
-
-  // let string = s
-  //   .toUpperCase()
-  //   .split(';')
-  //   .map((x) => x.split(':').reverse().join(', '))
-  //   .sort()
-  //   .join(')(');
-  // return '(' + string + ')';
 }
 
 let s =
